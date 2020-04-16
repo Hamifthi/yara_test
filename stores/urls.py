@@ -1,9 +1,10 @@
 from django.urls import path, include
 
-from .api_views import LoginView
+from . import views
 from .api_urls import router
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('login/', LoginView.as_view(), name="auth-login")
+    path('login/', views.LoginView.as_view(), name='login'),
+    path('order/product', views.OrderProduct.as_view(), name='order_product')
 ]
