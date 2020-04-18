@@ -20,21 +20,10 @@ class UserSerializer(serializers.ModelSerializer):
             }
         }
 
-class OwnerUserSerializer(serializers.ModelSerializer):
+class RegularUserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.User
-        fields = (
-            'first_name', 'last_name', 'email', 'password', 'is_active'
-            )
-        extra_kwargs = {
-            'is_active': {
-                'help_text':None
-            },
-            'password': {
-                'write_only': True,
-                'style': {'input_type': 'password'}
-            }
-        }
+        model = models.RegularUser
+        exclude = ['user', 'products', 'files']
 
 class LoginSerializer(serializers.ModelSerializer):
     class Meta:
@@ -57,11 +46,6 @@ class FileSerializer(serializers.ModelSerializer):
         model = models.File
         fields = '__all__'
 
-class RegularUserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.RegularUser
-        fields = '__all__'
-
 class StoreSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Store
@@ -78,4 +62,14 @@ class TokenSerializer(serializers.Serializer):
 class OrderProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.OrderProduct
-        fields = '__all__'
+        exclude = ['user']
+
+class OrderFileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.OrderFile
+        exclude = ['user']
+
+class SubscriptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Subscription
+        exclude = ['user']
